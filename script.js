@@ -243,7 +243,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
 /* ===========================
    FORMULARIO
-=========================== */
+=========================== 
 const form = document.getElementById("contactForm");
 
 if (form) {
@@ -265,7 +265,7 @@ if (form) {
             showMsg("¡Gracias! Tu consulta fue enviada. Te contactamos a la brevedad.", "ok");
         }, 1200);
     });
-}
+}*/
 
 function showMsg(text, type) {
     let msg = document.getElementById("formMsg");
