@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RENOVATEC | Arquitectura, Remodelación y Construcción</title>
+    <meta name="description" content="Diseñamos, remodelamos y construimos espacios funcionales y modernos. Soluciones integrales para hogares, oficinas y locales comerciales.">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- SPLASH -->
+    <div class="splash" id="splash" aria-hidden="true">
+        <img src="assets/logo/logo-renovatec.png" alt="Renovatec" class="splash-logo">
+        <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#inicio" class="logo">
+                    <img src="assets/logo/logo-renovatec.png" alt="Renovatec">
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#proyectos">Proyectos</a></li>
+                    <li><a href="#proceso">Proceso</a></li>
+                </ul>
+                <a href="#contacto" class="nav-cta">Consulta</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-left">
+                    <span class="section-label">SOLUCIONES INTEGRALES EN CONSTRUCCIÓN Y REMODELACIÓN</span>
+                    <h1>NO SOLO<br>TRANSFORMAMOS<br>ESPACIOS.</h1>
+                    <h2 class="hero-subtitle">NOS OCUPAMOS<br>DE TODO.</h2>
+                    <p class="hero-desc">Para que disfrutes el resultado sin preocupaciones.</p>
+                    <div class="hero-actions">
+                        <a href="#contacto" class="btn btn-primary">Solicitar presupuesto</a>
+                        <a href="#proyectos" class="btn btn-outline">Ver proyectos</a>
+                    </div>
+                </div>
+                <div class="hero-right">
+                    <p class="hero-right-label">SOLUCIONES SIN VUELTAS</p>
+                    <div class="hero-img-grid">
+                        <div class="hero-img-main">
+                            <img src="assets/img/proyecto-1.JPEG" alt="Remodelación integral">
+                        </div>
+                        <div class="hero-img-secondary">
+                            <img src="assets/img/proyecto-2.jpg" alt="Diseño de interiores">
+                            <img src="assets/img/proyecto-3.JPEG" alt="Construcción">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section id="nosotros" class="about">
+        <canvas class="bp-canvas" id="bpAbout"></canvas>
+        <div class="section-number">01</div>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">NOSOTROS</span>
+                <h2>Experiencia, diseño y ejecución en un mismo equipo.</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="assets/img/equipo-renovatec.jpg" alt="Equipo Renovatec">
+                </div>
+                <div class="about-content">
+                    <p>En Renovatec desarrollamos proyectos residenciales, comerciales y corporativos con una visión integral.</p>
+                    <p>Coordinamos diseño, planificación, materiales y ejecución para garantizar calidad, eficiencia y cumplimiento de plazos.</p>
+                    <p>Liderados por la Ing. Maia Alimenti Bel, acompañamos cada proyecto desde la idea inicial hasta la entrega final, aportando mirada técnica, funcional y estética.</p>
+                    <div class="about-stats">
+                        <div class="stat"><strong>+100</strong><span>Proyectos realizados</span></div>
+                        <div class="stat"><strong>10+</strong><span>Años de experiencia</span></div>
+                        <div class="stat"><strong>100%</strong><span>Compromiso profesional</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios" class="services">
+        <div class="section-number">02</div>
+        <div class="container">
+            <div class="services-header-row">
+                <div class="section-header" style="margin-bottom:0">
+                    <span class="section-label">SERVICIOS</span>
+                    <h2>Soluciones integrales<br>para cada etapa del proyecto.</h2>
+                </div>
+                <div class="services-nav">
+                    <button id="srvPrev" aria-label="Anterior"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button id="srvNext" aria-label="Siguiente"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="services-track-wrapper">
+            <div class="services-track" id="servicesTrack">
+
+                <article class="service-card">
+                                        <div class="service-card-img-photo">
+                        <div class="service-card-img-placeholder"><i class="fa-solid fa-ruler-combined"></i></div>
+                        <img src="assets/img/proyecto-1.JPEG" alt="Asesoramiento">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Asesoramiento y Diseño</h3>
+                        <p>Acompañamos cada proyecto desde su etapa inicial, ayudando a tomar decisiones funcionales y estéticas.</p>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                                        <div class="service-card-img-photo">
+                        <div class="service-card-img-placeholder"><i class="fa-solid fa-house"></i></div>
+                        <img src="assets/img/proyecto-2.jpg" alt="Remodelaciones">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Remodelaciones Integrales</h3>
+                        <p>Renovación completa de viviendas y espacios comerciales con coordinación total del proyecto.</p>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                                        <div class="service-card-img-photo">
+                        <div class="service-card-img-placeholder"><i class="fa-solid fa-hammer"></i></div>
+                        <img src="assets/img/proyecto-3.JPEG" alt="Construcción">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Construcción General</h3>
+                        <p>Obras nuevas con planificación y control profesional en cada etapa de la obra.</p>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                                        <div class="service-card-img-photo">
+                        <div class="service-card-img-placeholder"><i class="fa-solid fa-bolt"></i></div>
+                        <img src="assets/img/proyecto-1.JPEG" alt="Instalaciones">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Instalaciones</h3>
+                        <p>Electricidad, iluminación, plomería y mantenimiento domiciliario y comercial.</p>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                                        <div class="service-card-img-photo">
+                        <div class="service-card-img-placeholder"><i class="fa-solid fa-layer-group"></i></div>
+                        <img src="assets/img/proyecto-2.jpg" alt="Construcción en Seco">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Construcción en Seco</h3>
+                        <p>Soluciones rápidas y modernas para reformas y redistribución de espacios.</p>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                                        <div class="service-card-img-photo">
+                        <div class="service-card-img-placeholder"><i class="fa-solid fa-paint-roller"></i></div>
+                        <img src="assets/img/proyecto-3.JPEG" alt="Terminaciones">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Pintura y Terminaciones</h3>
+                        <p>Pintura interior y exterior, revestimientos, colocaciones y detalles finales.</p>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                                        <div class="service-card-img-photo">
+                        <div class="service-card-img-placeholder"><i class="fa-solid fa-building"></i></div>
+                        <img src="assets/img/proyecto-1.JPEG" alt="Puesta en Valor">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Puesta en Valor</h3>
+                        <p>Renovación estratégica de propiedades para aumentar su valor de venta o alquiler.</p>
+                    </div>
+                </article>
+
+                <article class="service-card">
+                                        <div class="service-card-img-photo">
+                        <div class="service-card-img-placeholder"><i class="fa-solid fa-wrench"></i></div>
+                        <img src="assets/img/proyecto-2.jpg" alt="Mantenimiento">
+                    </div>
+                    <div class="service-card-body">
+                        <h3>Mantenimiento Edilicio</h3>
+                        <p>Servicio continuo de mantenimiento preventivo y correctivo para hogares y comercios.</p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TRANSFORMACIÓN + PROYECTOS -->
+    <section class="before-after-section" id="proyectos">
+        <canvas class="bp-canvas" id="bpProyectos"></canvas>
+        <div class="section-number">03</div>
+        <div class="container">
+
+            <!-- Antes / Después -->
+            <div class="section-header">
+                <span class="section-label">TRANSFORMACIÓN</span>
+                <h2>Antes y después de una renovación.</h2>
+            </div>
+
+            <div class="before-after">
+                <img src="assets/img/proyecto-1.JPEG" alt="Después" class="after-image">
+                <div class="before-wrapper">
+                    <img src="assets/img/proyecto-2.jpg" alt="Antes" class="before-image">
+                </div>
+                <span class="ba-label ba-label-before">ANTES</span>
+                <span class="ba-label ba-label-after">DESPUÉS</span>
+                <div class="slider-line"></div>
+                <div class="slider-handle"><i class="fa-solid fa-left-right"></i></div>
+            </div>
+
+            <!-- Galería de proyectos -->
+            <div class="projects-subheader">
+                <div>
+                    <span class="section-label">PROYECTOS</span>
+                    <h3>Espacios transformados.</h3>
+                </div>
+            </div>
+
+            <div class="projects-gallery" id="projectsGallery">
+
+                <!-- Cada proj-card tiene data-images con 3 fotos separadas por | -->
+                <div class="proj-card" data-images="assets/img/proyecto-1.JPEG|assets/img/proyecto-2.jpg|assets/img/proyecto-3.JPEG">
+                    <div class="proj-card-img">
+                        <img src="assets/img/proyecto-1.JPEG" alt="Remodelación Residencial">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                    </div>
+                    
+                    <div class="proj-card-info"><h4>Remodelación Residencial</h4><span>Vivienda Familiar</span></div>
+                </div>
+
+                <div class="proj-card" data-images="assets/img/proyecto-2.jpg|assets/img/proyecto-3.JPEG|assets/img/proyecto-1.JPEG">
+                    <div class="proj-card-img">
+                        <img src="assets/img/proyecto-2.jpg" alt="Diseño Interior">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                    </div>
+                    
+                    <div class="proj-card-info"><h4>Diseño Interior</h4><span>Departamento Urbano</span></div>
+                </div>
+
+                <div class="proj-card" data-images="assets/img/proyecto-3.JPEG|assets/img/proyecto-1.JPEG|assets/img/proyecto-2.jpg">
+                    <div class="proj-card-img">
+                        <img src="assets/img/proyecto-3.JPEG" alt="Espacio Comercial">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                    </div>
+                    
+                    <div class="proj-card-info"><h4>Espacio Comercial</h4><span>Local Comercial</span></div>
+                </div>
+
+                <div class="proj-card" data-images="assets/img/proyecto-1.JPEG|assets/img/proyecto-3.JPEG|assets/img/proyecto-2.jpg">
+                    <div class="proj-card-img">
+                        <img src="assets/img/proyecto-1.JPEG" alt="Oficinas Modernas">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                    </div>
+                    
+                    <div class="proj-card-info"><h4>Oficinas Modernas</h4><span>Proyecto Corporativo</span></div>
+                </div>
+
+                <div class="proj-card" data-images="assets/img/proyecto-2.jpg|assets/img/proyecto-1.JPEG|assets/img/proyecto-3.JPEG">
+                    <div class="proj-card-img">
+                        <img src="assets/img/proyecto-2.jpg" alt="Puesta en Valor">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                    </div>
+                    
+                    <div class="proj-card-info"><h4>Puesta en Valor</h4><span>Inversión Inmobiliaria</span></div>
+                </div>
+
+                <div class="proj-card" data-images="assets/img/proyecto-3.JPEG|assets/img/proyecto-2.jpg|assets/img/proyecto-1.JPEG">
+                    <div class="proj-card-img">
+                        <img src="assets/img/proyecto-3.JPEG" alt="Reforma Integral">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+                    </div>
+                    
+                    <div class="proj-card-info"><h4>Reforma Integral</h4><span>PH Reciclado</span></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESO -->
+    <section id="proceso" class="process">
+        <canvas class="bp-canvas" id="bpProceso"></canvas>
+        <div class="section-number">04</div>
+        <div class="container">
+
+            <div class="process-header">
+                <span class="section-label">PROCESO</span>
+                <h2>Nuestro equipo,<br>formado por profesionales para cada etapa.</h2>
+            </div>
+
+            <div class="process-cols">
+
+                <div class="process-col">
+                    <div class="process-col-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <h3>Relevamiento</h3>
+                    <p>Escuchamos tus necesidades y evaluamos el espacio en detalle.</p>
+                </div>
+
+                <div class="process-divider"></div>
+
+                <div class="process-col">
+                    <div class="process-col-icon"><i class="fa-solid fa-ruler-combined"></i></div>
+                    <h3>Propuesta</h3>
+                    <p>Diseñamos una solución funcional y estética adaptada a tu proyecto.</p>
+                </div>
+
+                <div class="process-divider"></div>
+
+                <div class="process-col">
+                    <div class="process-col-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                    <h3>Presupuesto</h3>
+                    <p>Presentamos costos claros y planificación detallada de cada etapa.</p>
+                </div>
+
+                <div class="process-divider"></div>
+
+                <div class="process-col">
+                    <div class="process-col-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+                    <h3>Ejecución</h3>
+                    <p>Coordinamos cada rubro con profesionales especializados.</p>
+                </div>
+
+                <div class="process-divider"></div>
+
+                <div class="process-col">
+                    <div class="process-col-icon"><i class="fa-solid fa-key"></i></div>
+                    <h3>Entrega</h3>
+                    <p>Supervisamos cada detalle hasta la entrega final del proyecto.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- GARANTÍA -->
+    <section id="garantia" class="guarantee">
+        <canvas class="bp-canvas" id="bpGarantia"></canvas>
+        <div class="section-number">05</div>
+        <div class="container">
+            <div class="guarantee-inner">
+
+                <div class="guarantee-left">
+                    <span class="section-label">GARANTÍA</span>
+                    <h2>Tu inversión,<br>respaldada.</h2>
+                    <p>Cada proyecto que entregamos está respaldado por nuestra garantía de ejecución. Si algo no funciona como acordamos, lo resolvemos — sin costos adicionales, sin excusas.</p>
+                    <p>Porque nuestro trabajo no termina en la entrega. Termina cuando estás conforme.</p>
+                </div>
+
+                <div class="guarantee-items">
+
+                    <div class="guarantee-item">
+                        <div class="guarantee-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div>
+                            <h4>Garantía de terminaciones</h4>
+                            <p>Cualquier falla en pintura, revestimientos o colocaciones tiene solución asegurada.</p>
+                        </div>
+                    </div>
+
+                    <div class="guarantee-item">
+                        <div class="guarantee-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div>
+                            <h4>Instalaciones verificadas</h4>
+                            <p>Electricidad, plomería y gas entregados con revisión técnica y respaldo ante fallas.</p>
+                        </div>
+                    </div>
+
+                    <div class="guarantee-item">
+                        <div class="guarantee-icon"><i class="fa-solid fa-handshake"></i></div>
+                        <div>
+                            <h4>Compromiso post-obra</h4>
+                            <p>Seguimiento activo después de la entrega. Estamos disponibles ante cualquier inconveniente.</p>
+                        </div>
+                    </div>
+
+                    <div class="guarantee-item">
+                        <div class="guarantee-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        <div>
+                            <h4>Trabajo bien hecho</h4>
+                            <p>No cerramos un proyecto hasta que cada detalle esté a la altura de lo comprometido.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="cta">
+        <canvas class="bp-canvas" id="bpCta"></canvas>
+        <div class="section-number">06</div>
+        <div class="container">
+            <span class="section-label">CONTACTO</span>
+            <h2>Hablemos de tu próximo proyecto.</h2>
+            <p>Estamos listos para ayudarte a transformar tu espacio con soluciones profesionales y resultados duraderos.</p>
+            <form id="contactForm" class="contact-form" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="Ej: 11 1234-5678" autocomplete="tel">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="mail">E-mail</label>
+                    <input type="email" id="mail" name="mail" placeholder="tu@email.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="consulta">Consulta</label>
+                    <textarea id="consulta" name="consulta" placeholder="Contanos sobre tu proyecto o lo que necesitás…"></textarea>
+                </div>
+                <button type="submit" class="form-submit">Enviar consulta</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <img src="assets/logo/logo-renovatec.png" alt="Renovatec" class="footer-logo">
+            <p>Arquitectura, remodelación y construcción con enfoque integral.</p>
+            <div class="footer-social">
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            <p class="footer-credit">
+                Diseño y desarrollo digital por
+                <a href="https://pandastik.com" target="_blank" rel="noopener">PANDASTIK™</a>
+            </p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5491159357051" target="_blank" class="whatsapp-btn" aria-label="WhatsApp">
+        <span class="wa-pulse"></span>
+        <span class="wa-pulse wa-pulse--2"></span>
+        <img src="assets/img/icon-whatsapp2.png" alt="Contacto" class="wa-avatar">
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
