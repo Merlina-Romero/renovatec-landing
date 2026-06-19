@@ -21,10 +21,45 @@ window.addEventListener("scroll", () => {
 
 
 /* ===========================
+   NAVBAR MOBILE — hamburguesa
+=========================== */
+(function () {
+    const btn  = document.getElementById("navHamburger");
+    const menu = document.getElementById("navMobileMenu");
+    if (!btn || !menu) return;
+
+    btn.addEventListener("click", () => {
+        const isOpen = menu.classList.toggle("open");
+        btn.classList.toggle("open", isOpen);
+        btn.setAttribute("aria-expanded", isOpen);
+        menu.setAttribute("aria-hidden", !isOpen);
+    });
+
+    menu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            menu.classList.remove("open");
+            btn.classList.remove("open");
+            btn.setAttribute("aria-expanded", "false");
+            menu.setAttribute("aria-hidden", "true");
+        });
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!header.contains(e.target)) {
+            menu.classList.remove("open");
+            btn.classList.remove("open");
+            btn.setAttribute("aria-expanded", "false");
+            menu.setAttribute("aria-hidden", "true");
+        }
+    });
+})();
+
+
+/* ===========================
    SCROLL REVEAL
 =========================== */
 const reveals = document.querySelectorAll(
-    ".about, .services, .before-after-section, .process, .guarantee, .cta"
+    ".about, .services, .before-after-section, .audience, .process, .guarantee, .social-proof, .cta"
 );
 const revealOnScroll = () => {
     const trigger = window.innerHeight * 0.85;
@@ -32,7 +67,7 @@ const revealOnScroll = () => {
         if (el.getBoundingClientRect().top < trigger) el.classList.add("active");
     });
 };
-window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("scroll", revealOnScroll, { passive:true });
 revealOnScroll();
 
 
@@ -55,22 +90,26 @@ if (beforeAfter) {
         sliderHandle.style.left = `${pct}%`;
     }
 
+    function initCenter() {
+        const r = beforeAfter.getBoundingClientRect();
+        setPos(r.left + r.width / 2);
+    }
+
     beforeAfter.addEventListener("mousedown",  e  => { isDragging = true; setPos(e.clientX); });
-    window.addEventListener("mousemove",       e  => { if (isDragging) setPos(e.clientX); });
+    window.addEventListener("mousemove",       e  => { if (isDragging) setPos(e.clientX); }, { passive:true });
     window.addEventListener("mouseup",         ()  => { isDragging = false; });
     beforeAfter.addEventListener("touchstart", e  => { isDragging = true; setPos(e.touches[0].clientX); }, { passive:true });
     window.addEventListener("touchmove",       e  => { if (isDragging) setPos(e.touches[0].clientX); }, { passive:true });
     window.addEventListener("touchend",        ()  => { isDragging = false; });
 
-    // posición inicial
-    const r = beforeAfter.getBoundingClientRect();
-    setPos(r.left + r.width / 2);
+    window.addEventListener("resize", initCenter, { passive:true });
+
+    initCenter();
 }
 
 
 /* ===========================
    CARRUSEL SERVICIOS
-   loop infinito + escala central
 =========================== */
 (function () {
     const wrapper = document.querySelector(".services-track-wrapper");
@@ -82,7 +121,6 @@ if (beforeAfter) {
     const origCards = Array.from(track.children);
     const N = origCards.length;
 
-    // Triplicar: before | real | after
     origCards.forEach(c => track.appendChild(c.cloneNode(true)));
     origCards.forEach(c => track.prepend(c.cloneNode(true)));
 
@@ -134,11 +172,10 @@ if (beforeAfter) {
     btnNext.addEventListener("click", () => { if (!busy) slideTo(cur + 1); });
     btnPrev.addEventListener("click", () => { if (!busy) slideTo(cur - 1); });
 
-    // Drag
     let sx = null, dx = 0;
     track.addEventListener("mousedown",  e => { sx = e.clientX; });
     track.addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, { passive:true });
-    window.addEventListener("mousemove", e => { if (sx !== null) dx = e.clientX - sx; });
+    window.addEventListener("mousemove", e => { if (sx !== null) dx = e.clientX - sx; }, { passive:true });
     window.addEventListener("touchmove", e => { if (sx !== null) dx = e.touches[0].clientX - sx; }, { passive:true });
     function endDrag() {
         if (sx === null) return;
@@ -149,57 +186,46 @@ if (beforeAfter) {
     window.addEventListener("mouseup",  endDrag);
     window.addEventListener("touchend", endDrag);
 
-    // Auto-play
     let ap = setInterval(() => { if (!busy) slideTo(cur + 1); }, 3200);
     wrapper.addEventListener("mouseenter", () => clearInterval(ap));
     wrapper.addEventListener("mouseleave", () => { ap = setInterval(() => { if (!busy) slideTo(cur + 1); }, 3200); });
 
-    // Init
     requestAnimationFrame(() => requestAnimationFrame(() => jumpTo(N)));
-    window.addEventListener("resize", () => jumpTo(cur));
+    window.addEventListener("resize", () => jumpTo(cur), { passive:true });
 })();
 
 
 /* ===========================
    GALERÍA DE PROYECTOS
-   crossfade suave entre imágenes
 =========================== */
 (function () {
     const cards = document.querySelectorAll(".proj-card");
     if (!cards.length) return;
 
     cards.forEach((card, cardIdx) => {
-        const imgs     = card.dataset.images.split("|");
-        const imgWrap  = card.querySelector(".proj-card-img");
-        const dots     = card.querySelectorAll(".dot");
+        const imgs    = card.dataset.images.split("|");
+        const imgWrap = card.querySelector(".proj-card-img");
+        const dots    = card.querySelectorAll(".dot");
 
-        // Tomamos la img existente y la convertimos en capa "base"
         const imgA = imgWrap.querySelector("img");
         imgA.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 1.2s ease;";
 
-        // Creamos segunda capa encima
         const imgB = document.createElement("img");
         imgB.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease;";
         imgB.alt = imgA.alt;
         imgWrap.insertBefore(imgB, imgA.nextSibling);
 
-        // El contenedor necesita position:relative (ya lo tiene) y no cortar
-        // pero sí necesita que las capas se posicionen bien
-        // Aseguramos que el contenedor tenga altura definida via CSS aspect-ratio
-
-        let current  = 0;
-        let flipped  = false; // qué capa es la "activa" ahora
-        let timer    = null;
+        let current = 0;
+        let flipped = false;
+        let timer   = null;
 
         function goTo(idx) {
             const next = imgs[idx];
             if (flipped) {
-                // A es la visible, ponemos nueva en B y hacemos crossfade A→B
                 imgB.src = next;
                 imgB.style.opacity = "1";
                 imgA.style.opacity = "0";
             } else {
-                // B es la visible (o inicio), ponemos nueva en A
                 imgA.src = next;
                 imgA.style.opacity = "1";
                 imgB.style.opacity = "0";
@@ -210,17 +236,11 @@ if (beforeAfter) {
         }
 
         function startAuto() {
-            timer = setInterval(() => {
-                goTo((current + 1) % imgs.length);
-            }, 2800);
+            timer = setInterval(() => { goTo((current + 1) % imgs.length); }, 2800);
         }
-
         function stopAuto() { clearInterval(timer); }
 
-        // Precargamos todas las imágenes
         imgs.forEach(src => { const i = new Image(); i.src = src; });
-
-        // Arranque escalonado
         setTimeout(startAuto, cardIdx * 800);
 
         card.addEventListener("mouseenter", stopAuto);
@@ -243,73 +263,80 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
 /* ===========================
    FORMULARIO
-=========================== 
-const form = document.getElementById("contactForm");
+=========================== */
+(function () {
+    const form = document.getElementById("contactForm");
+    const msg  = document.getElementById("formMsg");
+    if (!form || !msg) return;
 
-if (form) {
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", async function (e) {
         e.preventDefault();
-        const btn      = form.querySelector(".form-submit");
-        const nombre   = form.querySelector("#nombre").value.trim();
-        const tel      = form.querySelector("#telefono").value.trim();
-        const mail     = form.querySelector("#mail").value.trim();
-        const consulta = form.querySelector("#consulta").value.trim();
+        const btn = form.querySelector(".form-submit");
 
-        if (!nombre || !tel || !mail || !consulta) {
-            showMsg("Por favor completá todos los campos.", "error"); return;
+        const nombre = form.querySelector("#nombre").value.trim();
+        const mail   = form.querySelector("#mail").value.trim();
+        if (!nombre || !mail) {
+            showMsg("Por favor completá nombre y e-mail.", "error");
+            return;
         }
-        btn.textContent = "Enviando..."; btn.disabled = true;
-        setTimeout(() => {
-            form.reset();
-            btn.textContent = "Enviar consulta"; btn.disabled = false;
-            showMsg("¡Gracias! Tu consulta fue enviada. Te contactamos a la brevedad.", "ok");
-        }, 1200);
-    });
-}*/
 
-function showMsg(text, type) {
-    let msg = document.getElementById("formMsg");
-    if (!msg) {
-        msg = document.createElement("p");
-        msg.id = "formMsg";
-        document.getElementById("contactForm").appendChild(msg);
+        btn.textContent = "Enviando…";
+        btn.disabled    = true;
+
+        try {
+            const res = await fetch(form.action, {
+                method: "POST",
+                body:    new FormData(form),
+                headers: { "Accept": "application/json" }
+            });
+
+            if (res.ok) {
+                form.reset();
+                showMsg("¡Gracias! Tu consulta fue enviada. Te contactamos a la brevedad.", "ok");
+            } else {
+                showMsg("Hubo un error al enviar. Intentá de nuevo o escribinos por WhatsApp.", "error");
+            }
+        } catch (_) {
+            showMsg("Sin conexión. Revisá tu red e intentá nuevamente.", "error");
+        }
+
+        btn.textContent = "Quiero una evaluación";
+        btn.disabled    = false;
+    });
+
+    function showMsg(text, type) {
+        msg.textContent = text;
+        msg.className   = `form-msg ${type === "ok" ? "ok" : "error"}`;
+        setTimeout(() => { msg.textContent = ""; msg.className = "form-msg"; }, 6000);
     }
-    msg.textContent = text;
-    msg.className   = type === "ok" ? "form-msg ok" : "form-msg error";
-    setTimeout(() => { msg.textContent = ""; msg.className = ""; }, 5000);
-}
+})();
+
 
 /* ===========================
    BLUEPRINT SYSTEM
-   Plano arquitectónico animado
-   en secciones con canvas .bp-canvas
-   — dibuja en márgenes, nunca
-     sobre el contenido central
 =========================== */
 (function () {
 
-    // ── Config ──────────────────────────────────────────────────────
-    const GRID  = 50;       // tamaño celda (igual al CSS)
-    const SPEED = 0.018;    // velocidad de dibujado (0-1 por frame)
-    const LOOP_PAUSE = 2800;// ms antes de reiniciar
+    const GRID       = 50;
+    const SPEED      = 0.018;
+    const LOOP_PAUSE = 2800;
 
-    // Paleta por tipo de sección
     const PALETTES = {
-        light: { line:"112,111,111", alpha:0.055 },  // sobre fondos claros
-        dark:  { line:"255,255,255", alpha:0.10  },  // sobre fondos oscuros
+        light: { line:"112,111,111", alpha:0.055 },
+        dark:  { line:"255,255,255", alpha:0.10  },
     };
 
-    // Qué secciones y qué paleta usar
     const SECTIONS = [
-        { id:"bpAbout",     dark:false },
-        { id:"bpProyectos", dark:false },
-        { id:"bpProceso",   dark:false },
-        { id:"bpGarantia",  dark:false },
-        { id:"bpCta",       dark:true  },
+        { id:"bpAbout",      dark:false },
+        { id:"bpProyectos",  dark:false },
+        { id:"bpProceso",    dark:false },
+        { id:"bpGarantia",   dark:false },
+        { id:"bpResultados", dark:true  },
+        { id:"bpCta",        dark:true  },
     ];
 
     SECTIONS.forEach(({ id, dark }) => {
-        const canvas = document.getElementById(id);
+        const canvas  = document.getElementById(id);
         if (!canvas) return;
 
         const section = canvas.parentElement;
@@ -320,34 +347,27 @@ function showMsg(text, type) {
 
         let W, H;
 
+        function snap(v) { return Math.round(v / GRID) * GRID; }
+
         function resize() {
             W = canvas.width  = section.offsetWidth;
             H = canvas.height = section.offsetHeight;
         }
 
-        // ── Generador de "plano" ──────────────────────────────────
-        // Cada plano es un set de primitivas (líneas, rectángulos,
-        // cotas, marcas) distribuidas en los 4 márgenes del canvas.
-        // El área central (40%-60% X, 20%-80% Y) queda libre.
-
         function makeBlueprint() {
             const items = [];
-            const mx1 = W * .05,  mx2 = W * .38;  // margen izq
-            const mx3 = W * .62,  mx4 = W * .95;  // margen der
-            const my1 = H * .04,  my2 = H * .96;  // margen top/bot
+            const mx1 = W * .05,  mx2 = W * .38;
+            const mx3 = W * .62,  mx4 = W * .95;
+            const my1 = H * .04,  my2 = H * .96;
 
-            // Helper random en rango
             const rr = (a, b) => a + Math.random() * (b - a);
-            const snap = v => Math.round(v / GRID) * GRID;
 
-            // ── Rectángulos tipo habitación (márgenes izq/der) ──
             const zones = [
                 [mx1, my1, mx2, my2],
                 [mx3, my1, mx4, my2],
             ];
             zones.forEach(([zx1, zy1, zx2, zy2]) => {
-                // 1-2 rectángulos por zona
-                const n = 1 + Math.floor(Math.random() * 2);
+                const n  = 1 + Math.floor(Math.random() * 2);
                 const zh = (zy2 - zy1) / n;
                 for (let i = 0; i < n; i++) {
                     const x = snap(rr(zx1, zx2 - GRID*2));
@@ -358,40 +378,23 @@ function showMsg(text, type) {
                 }
             });
 
-            // ── Líneas de cota (arriba y abajo) ──
             const dimY = [snap(my1 + GRID * .5), snap(my2 - GRID * .5)];
             dimY.forEach(dy => {
-                // izquierda
-                items.push({ type:"dim",
-                    x1: snap(mx1), y1: dy,
-                    x2: snap(mx2), y2: dy,
-                    label: (rr(2,6)).toFixed(1) + "m"
-                });
-                // derecha
-                items.push({ type:"dim",
-                    x1: snap(mx3), y1: dy,
-                    x2: snap(mx4), y2: dy,
-                    label: (rr(2,6)).toFixed(1) + "m"
-                });
+                items.push({ type:"dim", x1:snap(mx1), y1:dy, x2:snap(mx2), y2:dy, label:(rr(2,6)).toFixed(1)+"m" });
+                items.push({ type:"dim", x1:snap(mx3), y1:dy, x2:snap(mx4), y2:dy, label:(rr(2,6)).toFixed(1)+"m" });
             });
 
-            // ── Marcas de ángulo en esquinas ──
             [[mx1,my1],[mx2,my1],[mx1,my2],[mx2,my2],
              [mx3,my1],[mx4,my1],[mx3,my2],[mx4,my2]].forEach(([ax,ay]) => {
-                items.push({ type:"angle", x: snap(ax), y: snap(ay) });
+                items.push({ type:"angle", x:snap(ax), y:snap(ay) });
             });
 
-            // ── Grid punteado de fondo (solo en márgenes) ──
             items.push({ type:"grid_margin", mx1, mx2, mx3, mx4, my1, my2 });
 
             return items;
         }
 
-        // ── Animación de dibujado ────────────────────────────────
-        let items    = [];
-        let progresses = [];
-        let t        = 0;
-        let loopTimer = null;
+        let items = [], progresses = [], t = 0, loopTimer = null;
 
         function reset() {
             items      = makeBlueprint();
@@ -399,7 +402,6 @@ function showMsg(text, type) {
             t          = 0;
         }
 
-        // Dibuja un segmento parcialmente
         function seg(x1, y1, x2, y2, p) {
             ctx.beginPath();
             ctx.moveTo(x1, y1);
@@ -418,20 +420,10 @@ function showMsg(text, type) {
                     ctx.lineWidth = .35;
                     ctx.strokeStyle = `rgba(${C},${A * .5 * p})`;
                     const { mx1,mx2,mx3,mx4,my1,my2 } = item;
-                    // Zona izquierda
-                    for (let x = snap(mx1); x <= mx2; x += GRID) {
-                        seg(x, my1, x, my2, p);
-                    }
-                    for (let y = snap(my1); y <= my2; y += GRID) {
-                        seg(mx1, y, mx2, y, p);
-                    }
-                    // Zona derecha
-                    for (let x = snap(mx3); x <= mx4; x += GRID) {
-                        seg(x, my1, x, my2, p);
-                    }
-                    for (let y = snap(my1); y <= my2; y += GRID) {
-                        seg(mx3, y, mx4, y, p);
-                    }
+                    for (let x = snap(mx1); x <= mx2; x += GRID) seg(x, my1, x, my2, p);
+                    for (let y = snap(my1); y <= my2; y += GRID) seg(mx1, y, mx2, y, p);
+                    for (let x = snap(mx3); x <= mx4; x += GRID) seg(x, my1, x, my2, p);
+                    for (let y = snap(my1); y <= my2; y += GRID) seg(mx3, y, mx4, y, p);
                     break;
                 }
 
@@ -461,24 +453,18 @@ function showMsg(text, type) {
                     ctx.setLineDash([4, 4]);
                     seg(item.x1, item.y1, item.x2, item.y2, Math.min(1, p*1.4));
                     ctx.setLineDash([]);
-                    // Ticks en extremos
                     const tickH = 6;
                     [[item.x1,item.y1],[item.x2,item.y2]].forEach(([tx,ty]) => {
                         ctx.beginPath();
                         ctx.moveTo(tx, ty - tickH); ctx.lineTo(tx, ty + tickH);
                         ctx.stroke();
                     });
-                    // Label
                     if (p > .65) {
                         const la = (p-.65)/.35;
                         ctx.globalAlpha = A * la;
                         ctx.font = `${Math.max(9, W*.007)}px IBM Plex Sans, sans-serif`;
                         ctx.textAlign = "center";
-                        ctx.fillText(
-                            item.label,
-                            (item.x1+item.x2)/2,
-                            item.y1 - 8
-                        );
+                        ctx.fillText(item.label, (item.x1+item.x2)/2, item.y1 - 8);
                         ctx.globalAlpha = 1;
                     }
                     break;
@@ -491,11 +477,9 @@ function showMsg(text, type) {
                     ctx.lineWidth = .7;
                     ctx.strokeStyle = `rgba(${C},${A*fa})`;
                     const { x, y } = item;
-                    // Pequeña L
                     ctx.beginPath();
                     ctx.moveTo(x+sz, y); ctx.lineTo(x,y); ctx.lineTo(x, y+sz);
                     ctx.stroke();
-                    // Punto de intersección
                     ctx.beginPath();
                     ctx.arc(x, y, 1.5, 0, Math.PI*2);
                     ctx.fillStyle = `rgba(${C},${A*fa*1.5})`;
@@ -510,12 +494,8 @@ function showMsg(text, type) {
 
             let allDone = true;
             items.forEach((item, i) => {
-                // Arranque escalonado: cada elemento empieza
-                // cuando el anterior lleva un poco avanzado
                 const startT = i * 18;
-                if (t > startT) {
-                    progresses[i] = Math.min(1, progresses[i] + SPEED);
-                }
+                if (t > startT) progresses[i] = Math.min(1, progresses[i] + SPEED);
                 if (progresses[i] < 1) allDone = false;
                 drawItem(item, progresses[i]);
             });
@@ -523,26 +503,17 @@ function showMsg(text, type) {
             t++;
 
             if (allDone && !loopTimer) {
-                loopTimer = setTimeout(() => {
-                    reset();
-                    loopTimer = null;
-                }, LOOP_PAUSE);
+                loopTimer = setTimeout(() => { reset(); loopTimer = null; }, LOOP_PAUSE);
             }
 
             requestAnimationFrame(frame);
         }
 
-        // ── Init ─────────────────────────────────────────────────
         resize();
         reset();
         frame();
 
-        new ResizeObserver(() => {
-            resize();
-            reset();
-        }).observe(section);
-
-        function snap(v) { return Math.round(v / GRID) * GRID; }
+        new ResizeObserver(() => { resize(); reset(); }).observe(section);
     });
 
 })();
