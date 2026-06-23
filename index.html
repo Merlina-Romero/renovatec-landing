@@ -9,6 +9,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Google Search Console -->
+    <!-- <meta name="google-site-verification" content="TU_CODIGO"> -->
+
+    <!-- Google Analytics 4 -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
+
+    <!-- Meta Pixel -->
+    <!--
+    <script>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'TU_PIXEL_ID');
+        fbq('track', 'PageView');
+    </script>
+    -->
 </head>
 <body>
 
@@ -26,24 +53,22 @@
                     <img src="assets/logo/logo-renovatec.png" alt="Renovatec">
                 </a>
                 <ul class="nav-menu">
-                    <li><a href="#nosotros">Nosotros</a></li>
-                    <li><a href="#servicios">Servicios</a></li>
                     <li><a href="#proyectos">Proyectos</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
                     <li><a href="#proceso">Proceso</a></li>
                 </ul>
-                <!-- FIX: botón hamburguesa para mobile -->
                 <button class="nav-hamburger" id="navHamburger" aria-label="Abrir menú" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
                 <a href="#contacto" class="nav-cta">Consulta</a>
             </nav>
         </div>
-        <!-- FIX: menú mobile drawer -->
         <div class="nav-mobile-menu" id="navMobileMenu" aria-hidden="true">
             <ul>
-                <li><a href="#nosotros">Nosotros</a></li>
-                <li><a href="#servicios">Servicios</a></li>
                 <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#proceso">Proceso</a></li>
                 <li><a href="#contacto" class="nav-cta-mobile">Solicitar consulta</a></li>
             </ul>
@@ -57,34 +82,24 @@
             <div class="hero-grid">
 
                 <div class="hero-left">
-                    <span class="section-label">ESPECIALISTAS EN PUESTA EN VALOR DE PROPIEDADES</span>
-                    <h1>PONEMOS<br>EN VALOR<br>TU PROPIEDAD.</h1>
-                    <h2 class="hero-subtitle">MÁS VALOR.<br>MÁS OPORTUNIDADES.</h2>
-                    <p class="hero-desc">
-                        Ayudamos a propietarios, inversores e inmobiliarias a maximizar el potencial de sus inmuebles mediante remodelaciones estratégicas.
-                    </p>
+                    <span class="section-label">Especialistas en puesta en valor</span>
+                    <h1>PONEMOS<br>EN VALOR<br>TU <em>PROPIEDAD.</em></h1>
+                    <div class="hero-divider"></div>
+                    <p class="hero-desc">Ayudamos a propietarios, inversores e inmobiliarias a maximizar el potencial de sus inmuebles mediante remodelaciones estratégicas.</p>
                     <div class="hero-benefits">
                         <span>✓ Vendé más rápido</span>
                         <span>✓ Alquilá mejor</span>
-                        <span>✓ Aumentá el valor percibido</span>
-                        <span>✓ Maximizá la rentabilidad</span>
+                        <span>✓ Aumentá el valor</span>
+                        <span>✓ Máxima rentabilidad</span>
                     </div>
                     <div class="hero-actions">
                         <a href="#contacto" class="btn btn-primary">Evaluar mi propiedad</a>
                         <a href="#proyectos" class="btn btn-outline">Ver proyectos</a>
                     </div>
-                </div>
-
-                <div class="hero-right">
-                    <p class="hero-right-label">REMODELACIONES ESTRATÉGICAS</p>
-                    <div class="hero-img-grid">
-                        <div class="hero-img-main">
-                            <img src="assets/img/proyecto-1.JPEG" alt="Puesta en valor">
-                        </div>
-                        <div class="hero-img-secondary">
-                            <img src="assets/img/proyecto-2.jpg" alt="Remodelación integral">
-                            <img src="assets/img/proyecto-3.JPEG" alt="Construcción">
-                        </div>
+                    <div class="hero-trust">
+                        <span><i class="fa-solid fa-clock"></i> Respuesta en menos de 24 hs</span>
+                        <span><i class="fa-solid fa-file-invoice-dollar"></i> Presupuesto sin cargo</span>
+                        <span><i class="fa-solid fa-location-dot"></i> CABA y GBA</span>
                     </div>
                 </div>
 
@@ -92,81 +107,40 @@
         </div>
     </section>
 
-    <!-- NOSOTROS -->
-    <section id="nosotros" class="about">
-        <canvas class="bp-canvas" id="bpAbout"></canvas>
-        <div class="section-number">01</div>
+    <!-- TRANSFORMACIÓN -->
+    <section class="before-after-section" id="proyectos">
+        <canvas class="bp-canvas" id="bpProyectos"></canvas>
+        <div class="section-number">Transformación</div>
         <div class="container">
 
-            <div class="about-header">
-                <span class="section-label">NOSOTROS</span>
-                <h2>Cada propiedad tiene<br>un potencial oculto.</h2>
-                <p class="about-intro">Transformamos propiedades comunes en espacios con mayor valor, funcionalidad y atractivo comercial.</p>
+            <div class="section-header">
+                
+                <h2>Los resultados<br>se ven.</h2>
+                <p class="section-desc">Cada proyecto busca generar más valor, mejor imagen y mayor potencial para la propiedad.</p>
             </div>
 
-            <div class="about-grid">
-
-                <div class="about-image">
-                    <img src="assets/img/equipo-renovatec.jpg" alt="Equipo Renovatec">
+            <div class="before-after">
+                <img src="assets/img/after.png" alt="Después" class="after-image">
+                <div class="before-wrapper">
+                    <img src="assets/img/before.png" alt="Antes" class="before-image">
                 </div>
-
-                <div class="about-content">
-                    <p>En Renovatec analizamos cada inmueble para identificar qué mejoras generan el mayor impacto visual, funcional y económico.</p>
-                    <p>No se trata de gastar más. Se trata de invertir donde realmente genera valor.</p>
-                    <p>Trabajamos con propietarios, inversores e inmobiliarias que buscan vender mejor, alquilar más rápido o renovar sus espacios con criterio profesional.</p>
-                    <p>Liderados por la Ing. Maia Alimenti Bel, acompañamos cada proyecto desde el diagnóstico inicial hasta la entrega final.</p>
-                </div>
-
-            </div>
-
-            <!-- Banda de métricas -->
-            <div class="about-stats-band">
-                <div class="stat-band-item">
-                    <strong>+100</strong>
-                    <span>Proyectos</span>
-                </div>
-                <div class="stat-band-divider"></div>
-                <div class="stat-band-item">
-                    <strong>10+</strong>
-                    <span>Años</span>
-                </div>
-                <div class="stat-band-divider"></div>
-                <div class="stat-band-item">
-                    <strong>100%</strong>
-                    <span>Compromiso</span>
-                </div>
-            </div>
-
-            <!-- Mini tarjetas de diferenciación -->
-            <div class="about-pillars">
-                <div class="about-pillar">
-                    <div class="about-pillar-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
-                    <h4>Evaluación estratégica</h4>
-                    <p>Detectamos dónde conviene invertir para generar el mayor retorno posible antes de gastar un peso.</p>
-                </div>
-                <div class="about-pillar">
-                    <div class="about-pillar-icon"><i class="fa-solid fa-network-wired"></i></div>
-                    <h4>Coordinación integral</h4>
-                    <p>Un solo interlocutor para todos los rubros. Sin que tengas que coordinar múltiples proveedores.</p>
-                </div>
-                <div class="about-pillar">
-                    <div class="about-pillar-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
-                    <h4>Visión inmobiliaria</h4>
-                    <p>Pensamos cada mejora con criterio de mercado, para que la propiedad valga más al momento de vender o alquilar.</p>
-                </div>
+                <span class="ba-label ba-label-before">Antes</span>
+                <span class="ba-label ba-label-after">Después</span>
+                <div class="slider-line"></div>
+                <div class="slider-handle"><i class="fa-solid fa-left-right"></i></div>
             </div>
 
         </div>
     </section>
 
-    <!-- SERVICIOS — FIX: una sola etiqueta <section> -->
+    <!-- SERVICIOS -->
     <section id="servicios" class="services">
-        <div class="section-number">02</div>
+        <div class="section-number">Servicios</div>
         <div class="container">
             <div class="services-header-row">
                 <div class="section-header" style="margin-bottom:0">
-                    <span class="section-label">SERVICIOS</span>
-                    <h2>Transformamos propiedades para generar más valor.</h2>
+                    
+                    <h2>Transformamos propiedades<br>para generar más valor.</h2>
                 </div>
                 <div class="services-nav">
                     <button id="srvPrev" aria-label="Anterior"><i class="fa-solid fa-arrow-left"></i></button>
@@ -177,10 +151,10 @@
         <div class="services-track-wrapper">
             <div class="services-track" id="servicesTrack">
 
-                <article class="service-card">
+                <article class="service-card" data-images="assets/img/trab1-a.png | assers/img/trab1-b.png | assets/img/trab1-c.png">
                     <div class="service-card-img-photo">
-                        <div class="service-card-img-placeholder"><i class="fa-solid fa-building"></i></div>
-                        <img src="assets/img/proyecto-1.JPEG" alt="Puesta en Valor">
+                        <img src="assers/img/trab1-b.png" alt="Puesta en Valor">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                     </div>
                     <div class="service-card-body">
                         <h3>Puesta en Valor para Venta</h3>
@@ -188,10 +162,10 @@
                     </div>
                 </article>
 
-                <article class="service-card">
+                <article class="service-card" data-images="assets/img/trab2-a.png|assers/img/trab2-b.png|assets/img/trab2-c.png">
                     <div class="service-card-img-photo">
-                        <div class="service-card-img-placeholder"><i class="fa-solid fa-house"></i></div>
-                        <img src="assets/img/proyecto-2.jpg" alt="Remodelación Integral">
+                        <img src="assets/img/trab2-b.png" alt="Remodelación Integral">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                     </div>
                     <div class="service-card-body">
                         <h3>Remodelación Integral</h3>
@@ -199,10 +173,10 @@
                     </div>
                 </article>
 
-                <article class="service-card">
+                <article class="service-card" data-images="assets/img/trab3-a.png|assers/img/trab3-b.png|assets/img/trab3-c.png">
                     <div class="service-card-img-photo">
-                        <div class="service-card-img-placeholder"><i class="fa-solid fa-wrench"></i></div>
                         <img src="assets/img/proyecto-3.JPEG" alt="Mantenimiento">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                     </div>
                     <div class="service-card-body">
                         <h3>Mantenimiento y Reparaciones</h3>
@@ -210,10 +184,10 @@
                     </div>
                 </article>
 
-                <article class="service-card">
+                <article class="service-card" data-images="assets/img/trab4-a.png|assers/img/trab4-b.png|assets/img/trab4-c.png">
                     <div class="service-card-img-photo">
-                        <div class="service-card-img-placeholder"><i class="fa-solid fa-chart-line"></i></div>
                         <img src="assets/img/proyecto-1.JPEG" alt="Obras para Inversores">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                     </div>
                     <div class="service-card-body">
                         <h3>Obras para Inversores</h3>
@@ -221,10 +195,10 @@
                     </div>
                 </article>
 
-                <article class="service-card">
+                <article class="service-card" data-images="assets/img/trab5-a.png|assers/img/trab5-b.png|assets/img/trab5-c.png">
                     <div class="service-card-img-photo">
-                        <div class="service-card-img-placeholder"><i class="fa-solid fa-ruler-combined"></i></div>
                         <img src="assets/img/proyecto-2.jpg" alt="Asesoramiento Técnico">
+                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                     </div>
                     <div class="service-card-body">
                         <h3>Asesoramiento Técnico</h3>
@@ -236,176 +210,89 @@
         </div>
     </section>
 
-    <!-- TRANSFORMACIÓN + PROYECTOS -->
-    <section class="before-after-section" id="proyectos">
-        <canvas class="bp-canvas" id="bpProyectos"></canvas>
-        <div class="section-number">03</div>
+    <!-- NOSOTROS -->
+    <section id="nosotros" class="about">
+        <canvas class="bp-canvas" id="bpAbout"></canvas>
+        <div class="section-number">nosotros</div>
         <div class="container">
 
-            <div class="section-header">
-                <span class="section-label">TRANSFORMACIÓN</span>
-                <h2>Los resultados se ven.</h2>
-                <p class="section-desc">Cada proyecto busca generar más valor, mejor imagen y mayor potencial para la propiedad.</p>
+            <div class="about-header">
+                
+                <h2>Cada propiedad tiene<br>un potencial oculto.</h2>
+                <p class="about-intro"> y nosotros, un especialista para explotar cada potencial.</p>
             </div>
 
-            <div class="before-after">
-                <img src="assets/img/proyecto-1.JPEG" alt="Después" class="after-image">
-                <div class="before-wrapper">
-                    <img src="assets/img/proyecto-2.jpg" alt="Antes" class="before-image">
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="assets/img/equipo-renovatec.jpg" alt="Equipo Renovatec">
                 </div>
-                <span class="ba-label ba-label-before">ANTES</span>
-                <span class="ba-label ba-label-after">DESPUÉS</span>
-                <div class="slider-line"></div>
-                <div class="slider-handle"><i class="fa-solid fa-left-right"></i></div>
+                <div class="about-content">
+                    <p>En Renovatec analizamos cada inmueble para identificar qué mejoras generan el mayor impacto visual, funcional y económico.</p>
+                    <p>No se trata de gastar más. Se trata de invertir donde realmente genera valor.</p>
+                    <p>Trabajamos con propietarios, inversores e inmobiliarias que buscan vender mejor, alquilar más rápido o renovar sus espacios con criterio profesional.</p>
+                    <p>Liderados por la Ing. Maia Alimenti Bel, acompañamos cada proyecto desde el diagnóstico inicial hasta la entrega final.</p>
+                </div>
             </div>
 
-            <div class="projects-subheader">
-                <span class="section-label">PROYECTOS</span>
-                <h3>Espacios transformados.</h3>
+            <div class="about-pillars">
+                <div class="about-pillar">
+                    <div class="about-pillar-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <h4>Evaluación estratégica</h4>
+                    <p>Detectamos dónde conviene invertir para generar el mayor retorno posible antes de gastar un peso.</p>
+                </div>
+                <div class="about-pillar">
+                    <div class="about-pillar-icon"><i class="fa-solid fa-network-wired"></i></div>
+                    <h4>Coordinación integral</h4>
+                    <p>Un solo interlocutor para todos los rubros. Sin que tengas que gestionar múltiples proveedores.</p>
+                </div>
+                <div class="about-pillar">
+                    <div class="about-pillar-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                    <h4>Visión inmobiliaria</h4>
+                    <p>Pensamos cada mejora con criterio de mercado, para que la propiedad valga más al vender o alquilar.</p>
+                </div>
             </div>
 
-            <div class="projects-gallery" id="projectsGallery">
-
-                <div class="proj-card" data-images="assets/img/proyecto-1.JPEG|assets/img/proyecto-2.jpg|assets/img/proyecto-3.JPEG">
-                    <div class="proj-card-img">
-                        <img src="assets/img/proyecto-1.JPEG" alt="Remodelación Residencial">
-                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="proj-card-info"><h4>Departamento listo para alquiler</h4><span>Vivienda Familiar</span></div>
-                </div>
-
-                <div class="proj-card" data-images="assets/img/proyecto-2.jpg|assets/img/proyecto-3.JPEG|assets/img/proyecto-1.JPEG">
-                    <div class="proj-card-img">
-                        <img src="assets/img/proyecto-2.jpg" alt="Puesta en valor para venta">
-                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="proj-card-info"><h4>Puesta en valor para venta</h4><span>Inversión Inmobiliaria</span></div>
-                </div>
-
-                <div class="proj-card" data-images="assets/img/proyecto-3.JPEG|assets/img/proyecto-1.JPEG|assets/img/proyecto-2.jpg">
-                    <div class="proj-card-img">
-                        <img src="assets/img/proyecto-3.JPEG" alt="Modernización de local comercial">
-                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="proj-card-info"><h4>Modernización de local comercial</h4><span>Local Comercial</span></div>
-                </div>
-
-                <div class="proj-card" data-images="assets/img/proyecto-1.JPEG|assets/img/proyecto-3.JPEG|assets/img/proyecto-2.jpg">
-                    <div class="proj-card-img">
-                        <img src="assets/img/proyecto-1.JPEG" alt="Optimización para inversión">
-                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="proj-card-info"><h4>Optimización para inversión</h4><span>Proyecto Corporativo</span></div>
-                </div>
-
-                <div class="proj-card" data-images="assets/img/proyecto-2.jpg|assets/img/proyecto-1.JPEG|assets/img/proyecto-3.JPEG">
-                    <div class="proj-card-img">
-                        <img src="assets/img/proyecto-2.jpg" alt="Revalorización de departamento">
-                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="proj-card-info"><h4>Revalorización de departamento</h4><span>Departamento Urbano</span></div>
-                </div>
-
-                <div class="proj-card" data-images="assets/img/proyecto-3.JPEG|assets/img/proyecto-2.jpg|assets/img/proyecto-1.JPEG">
-                    <div class="proj-card-img">
-                        <img src="assets/img/proyecto-3.JPEG" alt="Revalorización de PH">
-                        <div class="proj-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
-                    </div>
-                    <div class="proj-card-info"><h4>Revalorización de PH</h4><span>PH Reciclado</span></div>
-                </div>
-
-            </div>
         </div>
     </section>
-
-    <!-- ¿A QUIÉN AYUDAMOS? — entre PROYECTOS y PROCESO -->
-    <section id="audiencia" class="audience">
-        <div class="section-number">04</div>
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">¿A QUIÉN AYUDAMOS?</span>
-                <h2>Trabajamos con quienes quieren sacarle más partido a su propiedad.</h2>
-            </div>
-            <div class="audience-grid">
-
-                <article class="audience-card">
-                    <div class="audience-icon"><i class="fa-solid fa-house"></i></div>
-                    <h3>Propietarios</h3>
-                    <p>Mejoramos el valor y la funcionalidad de tu inmueble para que puedas venderlo mejor, alquilarlo más rápido o disfrutarlo como siempre quisiste.</p>
-                    <a href="#contacto" class="audience-cta">Evaluar mi propiedad <i class="fa-solid fa-arrow-right"></i></a>
-                </article>
-
-                <article class="audience-card audience-card--featured">
-                    <div class="audience-icon"><i class="fa-solid fa-chart-line"></i></div>
-                    <h3>Inversores</h3>
-                    <p>Maximizamos la rentabilidad de cada operación con mejoras estratégicas que aceleran la comercialización y aumentan el precio de venta o alquiler.</p>
-                    <a href="#contacto" class="audience-cta">Ver cómo trabajamos <i class="fa-solid fa-arrow-right"></i></a>
-                </article>
-
-                <article class="audience-card">
-                    <div class="audience-icon"><i class="fa-solid fa-building"></i></div>
-                    <h3>Inmobiliarias</h3>
-                    <p>Potenciamos las propiedades antes de salir al mercado para que se vendan más rápido y a mejor precio. Un aliado que completa tu servicio.</p>
-                    <a href="#contacto" class="audience-cta">Hablar con el equipo <i class="fa-solid fa-arrow-right"></i></a>
-                </article>
-
-            </div>
-        </div>
-    </section>
-
     <!-- PROCESO -->
     <section id="proceso" class="process">
         <canvas class="bp-canvas" id="bpProceso"></canvas>
-        <div class="section-number">05</div>
+        <div class="section-number">Proceso</div>
         <div class="container">
             <div class="process-header">
-                <span class="section-label">PROCESO</span>
                 <h2>Cuatro pasos hacia<br>una propiedad transformada.</h2>
             </div>
-            <div class="process-cols">
 
+            <div class="process-steps">
                 <div class="process-col">
                     <div class="process-col-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-                    <h3>1. Evaluamos la propiedad</h3>
+                    <h3>Evaluamos</h3>
                     <p>Detectamos qué mejoras tienen mayor impacto visual, funcional y comercial.</p>
                 </div>
-                <div class="process-divider"></div>
                 <div class="process-col">
                     <div class="process-col-icon"><i class="fa-solid fa-ruler-combined"></i></div>
-                    <h3>2. Diseñamos una estrategia</h3>
+                    <h3>Estrategia</h3>
                     <p>Priorizamos acciones según tus objetivos y presupuesto disponible.</p>
                 </div>
-                <div class="process-divider"></div>
                 <div class="process-col">
                     <div class="process-col-icon"><i class="fa-solid fa-helmet-safety"></i></div>
-                    <h3>3. Ejecutamos</h3>
+                    <h3>Ejecutamos</h3>
                     <p>Coordinamos todos los trabajos necesarios para lograr el resultado esperado.</p>
                 </div>
-                <div class="process-divider"></div>
                 <div class="process-col">
                     <div class="process-col-icon"><i class="fa-solid fa-key"></i></div>
-                    <h3>4. Entregamos</h3>
+                    <h3>Entregamos</h3>
                     <p>Propiedad lista para vender, alquilar o disfrutar — sin vueltas.</p>
                 </div>
-
             </div>
-        </div>
-    </section>
 
-    <!-- GARANTÍA -->
-    <section id="garantia" class="guarantee">
-        <canvas class="bp-canvas" id="bpGarantia"></canvas>
-        <div class="section-number">06</div>
-        <div class="container">
-            <div class="guarantee-inner">
-
+            <div class="process-guarantee">
                 <div class="guarantee-left">
-                    <span class="section-label">GARANTÍA</span>
+                    <span class="section-label">este sistema ofrece</span>
                     <h2>Tranquilidad<br>en cada etapa.</h2>
-                    <p>Cada proyecto que entregamos está respaldado por nuestro compromiso de ejecución. Si algo no funciona como acordamos, lo resolvemos.</p>
-                    <p>Porque nuestro trabajo no termina en la entrega. Termina cuando el cliente queda conforme.</p>
+                    <p>Cada proyecto está respaldado por nuestro compromiso de ejecución. Si algo no funciona como acordamos, lo resolvemos.</p>
+                    <p>Nuestro trabajo no termina en la entrega. Termina cuando el cliente queda conforme.</p>
                 </div>
-
                 <div class="guarantee-items">
                     <div class="guarantee-item">
                         <div class="guarantee-icon"><i class="fa-solid fa-circle-check"></i></div>
@@ -417,100 +304,46 @@
                     <div class="guarantee-item">
                         <div class="guarantee-icon"><i class="fa-solid fa-comments"></i></div>
                         <div>
-                            <h4>Seguimiento</h4>
-                            <p>Acompañamiento activo durante y después de la obra. Disponibles ante cualquier consulta o inconveniente.</p>
+                            <h4>Seguimiento activo</h4>
+                            <p>Disponibles durante y después de la obra ante cualquier consulta o inconveniente.</p>
                         </div>
                     </div>
                     <div class="guarantee-item">
                         <div class="guarantee-icon"><i class="fa-solid fa-network-wired"></i></div>
                         <div>
-                            <h4>Coordinación integral</h4>
-                            <p>Un responsable único para todos los rubros. Vos no tenés que hablar con diez personas distintas.</p>
+                            <h4>Un solo responsable</h4>
+                            <p>Coordinamos todos los rubros. No tenés que hablar con diez personas distintas.</p>
                         </div>
                     </div>
                     <div class="guarantee-item">
                         <div class="guarantee-icon"><i class="fa-solid fa-handshake"></i></div>
                         <div>
-                            <h4>Compromiso profesional</h4>
-                            <p>Comunicación clara y transparencia en cada etapa. Sabés exactamente cómo avanza tu proyecto.</p>
+                            <h4>Transparencia total</h4>
+                            <p>Comunicación clara en cada etapa. Sabés exactamente cómo avanza tu proyecto.</p>
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- RESULTADOS / PRUEBA SOCIAL (punto 9) -->
-    <section id="resultados" class="social-proof">
-        <canvas class="bp-canvas" id="bpResultados"></canvas>
-        <div class="section-number">07</div>
-        <div class="container">
-
-            <div class="section-header">
-                <span class="section-label">ALGUNOS RESULTADOS</span>
-                <h2>Números que respaldan el trabajo.</h2>
-            </div>
-
-            <div class="sp-stats">
-                <div class="sp-stat">
-                    <strong>+100</strong>
-                    <span>proyectos realizados</span>
-                </div>
-                <div class="sp-divider"></div>
-                <div class="sp-stat">
-                    <strong>10+</strong>
-                    <span>años de experiencia</span>
-                </div>
-                <div class="sp-divider"></div>
-                <div class="sp-stat">
-                    <strong>3 tipos</strong>
-                    <span>de clientes atendidos</span>
-                </div>
-            </div>
-
-            <div class="sp-clients">
-                <div class="sp-client">
-                    <div class="sp-client-icon"><i class="fa-solid fa-house"></i></div>
-                    <span>Clientes particulares</span>
-                </div>
-                <div class="sp-client">
-                    <div class="sp-client-icon"><i class="fa-solid fa-chart-line"></i></div>
-                    <span>Inversores</span>
-                </div>
-                <div class="sp-client">
-                    <div class="sp-client-icon"><i class="fa-solid fa-building"></i></div>
-                    <span>Inmobiliarias</span>
-                </div>
-            </div>
-
-            <!-- Testimonios: placeholder listo para cuando haya reseñas reales -->
-            <div class="sp-testimonials" id="spTestimonials">
-                <!-- Ejemplo de estructura para agregar testimonios reales:
-                <div class="sp-testimonial">
-                    <p class="sp-testimonial-text">"Texto del testimonio."</p>
-                    <div class="sp-testimonial-author">
-                        <img src="assets/img/cliente-foto.jpg" alt="Nombre Cliente">
-                        <div>
-                            <strong>Nombre Apellido</strong>
-                            <span>Propietario / Inversor / Inmobiliaria X</span>
-                        </div>
-                    </div>
-                </div>
-                -->
             </div>
 
         </div>
     </section>
+
+
 
     <!-- CONTACTO -->
     <section id="contacto" class="cta">
         <canvas class="bp-canvas" id="bpCta"></canvas>
-        <div class="section-number">08</div>
+        <div class="section-number">Contacto</div>
         <div class="container">
-            <span class="section-label">CONTACTO</span>
+
             <h2>Descubrí cuánto potencial<br>tiene tu propiedad.</h2>
             <p class="cta-intro">Solicitá una evaluación sin compromiso y te ayudaremos a identificar las mejoras que más valor pueden generar.</p>
+
+            <div class="cta-coverage">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Trabajamos en <strong>CABA</strong>, <strong>Zona Oeste</strong>, <strong>Zona Norte</strong> y <strong>Zona Sur</strong></span>
+            </div>
+
             <form id="contactForm" class="contact-form" action="https://formspree.io/f/mlgknkng" method="POST">
                 <div class="form-row">
                     <div class="form-group">
@@ -542,7 +375,7 @@
             <img src="assets/logo/logo-renovatec.png" alt="Renovatec" class="footer-logo">
             <p>Remodelaciones estratégicas para propietarios, inversores e inmobiliarias.</p>
             <div class="footer-social">
-                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.instagram.com/renovatec.arg/?hl=es" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                 <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
             </div>
@@ -554,11 +387,17 @@
     </footer>
 
     <!-- WHATSAPP -->
-    <a href="https://wa.me/5491159357051" target="_blank" class="whatsapp-btn" aria-label="WhatsApp">
-        <span class="wa-pulse"></span>
-        <span class="wa-pulse wa-pulse--2"></span>
-        <img src="assets/img/icon-whatsapp2.png" alt="Contacto" class="wa-avatar">
-    </a>
+    <div class="whatsapp-wrap">
+        <a href="https://wa.me/5491159357051" target="_blank" rel="noopener" class="whatsapp-text">
+            <span class="wa-text-title">¿Tenés un proyecto?</span>
+            <span class="wa-text-sub">Hablemos por WhatsApp</span>
+        </a>
+        <a href="https://wa.me/5491159357051" target="_blank" rel="noopener" class="whatsapp-btn" aria-label="WhatsApp">
+            <span class="wa-pulse"></span>
+            <span class="wa-pulse wa-pulse--2"></span>
+            <img src="assets/img/icon-whatsapp2.png" alt="Contacto" class="wa-avatar">
+        </a>
+    </div>
 
     <script src="script.js"></script>
 </body>
