@@ -8,7 +8,6 @@ setTimeout(() => {
     splash.addEventListener("transitionend", () => splash.classList.add("done"), { once:true });
 }, 1900);
 
-
 /* ===========================
    NAVBAR — scroll shadow
 =========================== */
@@ -16,7 +15,6 @@ const header = document.querySelector(".header");
 window.addEventListener("scroll", () => {
     header.classList.toggle("scrolled", window.scrollY > 20);
 }, { passive:true });
-
 
 /* ===========================
    NAVBAR — hamburguesa mobile
@@ -41,18 +39,14 @@ window.addEventListener("scroll", () => {
     });
 
     menu.querySelectorAll("a").forEach(link => link.addEventListener("click", close));
-
-    document.addEventListener("click", (e) => {
-        if (!header.contains(e.target)) close();
-    });
+    document.addEventListener("click", e => { if (!header.contains(e.target)) close(); });
 })();
-
 
 /* ===========================
    SCROLL REVEAL
 =========================== */
 const reveals = document.querySelectorAll(
-    ".about, .services, .before-after-section, .audience, .process, .guarantee, .cta"
+    ".about, .services, .before-after-section, .process, .cta"
 );
 const revealOnScroll = () => {
     const trigger = window.innerHeight * 0.88;
@@ -62,7 +56,6 @@ const revealOnScroll = () => {
 };
 window.addEventListener("scroll", revealOnScroll, { passive:true });
 revealOnScroll();
-
 
 /* ===========================
    BEFORE / AFTER SLIDER
@@ -91,16 +84,13 @@ revealOnScroll();
 
     ba.addEventListener("mousedown",  e => { dragging = true; setPos(e.clientX); });
     window.addEventListener("mousemove", e => { if (dragging) setPos(e.clientX); }, { passive:true });
-    window.addEventListener("mouseup",   () => { dragging = false; });
-
+    window.addEventListener("mouseup", () => { dragging = false; });
     ba.addEventListener("touchstart", e => { dragging = true; setPos(e.touches[0].clientX); }, { passive:true });
     window.addEventListener("touchmove", e => { if (dragging) setPos(e.touches[0].clientX); }, { passive:true });
-    window.addEventListener("touchend",  () => { dragging = false; });
-
+    window.addEventListener("touchend", () => { dragging = false; });
     window.addEventListener("resize", center, { passive:true });
     center();
 })();
-
 
 /* ===========================
    CARRUSEL SERVICIOS
@@ -116,6 +106,7 @@ revealOnScroll();
     const origCards = Array.from(track.children);
     const N = origCards.length;
 
+    // Triplicar para loop infinito
     origCards.forEach(c => track.appendChild(c.cloneNode(true)));
     origCards.forEach(c => track.prepend(c.cloneNode(true)));
 
@@ -138,7 +129,7 @@ revealOnScroll();
         track.style.transition = "none";
         track.style.transform  = `translateX(${offsetFor(idx)}px)`;
         cur = idx;
-        scale();
+        updateScale();
     }
 
     function slideTo(idx) {
@@ -146,7 +137,7 @@ revealOnScroll();
         track.style.transition = `transform ${DUR}ms cubic-bezier(.4,0,.2,1)`;
         track.style.transform  = `translateX(${offsetFor(idx)}px)`;
         cur = idx;
-        scale();
+        updateScale();
         setTimeout(() => {
             busy = false;
             if (cur < N)         jumpTo(cur + N);
@@ -154,25 +145,27 @@ revealOnScroll();
         }, DUR + 10);
     }
 
-    function scale() {
+    function updateScale() {
         allCards().forEach((card, i) => {
             const on = i === cur;
             card.style.transition = `transform ${DUR}ms cubic-bezier(.4,0,.2,1), box-shadow ${DUR}ms ease, opacity ${DUR}ms ease`;
             card.style.transform  = `scale(${on ? SCALE_ON : SCALE_OFF})`;
             card.style.opacity    = on ? "1" : "0.55";
             card.style.boxShadow  = on ? "0 20px 48px rgba(0,0,0,.22)" : "none";
+            // Activar/desactivar rotación de imágenes según si es la card activa
+            if (card._imgSetActive) card._imgSetActive(on);
         });
     }
 
     btnNext.addEventListener("click", () => { if (!busy) slideTo(cur + 1); });
     btnPrev.addEventListener("click", () => { if (!busy) slideTo(cur - 1); });
 
+    // Drag / swipe
     let sx = null, dx = 0;
     track.addEventListener("mousedown",  e => { sx = e.clientX; });
     track.addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, { passive:true });
     window.addEventListener("mousemove", e => { if (sx !== null) dx = e.clientX - sx; }, { passive:true });
     window.addEventListener("touchmove", e => { if (sx !== null) dx = e.touches[0].clientX - sx; }, { passive:true });
-
     function endDrag() {
         if (sx === null) return;
         sx = null;
@@ -182,6 +175,7 @@ revealOnScroll();
     window.addEventListener("mouseup",  endDrag);
     window.addEventListener("touchend", endDrag);
 
+    // Auto-play
     let ap = setInterval(() => { if (!busy) slideTo(cur + 1); }, 3200);
     wrapper.addEventListener("mouseenter", () => clearInterval(ap));
     wrapper.addEventListener("mouseleave", () => {
@@ -192,125 +186,95 @@ revealOnScroll();
     window.addEventListener("resize", () => jumpTo(cur), { passive:true });
 })();
 
-
 /* ===========================
-   GALERÍA DE IMÁGENES ROTATIVAS
-   crossfade suave entre imágenes.
-   - .proj-card[data-images]: rota siempre (galería estática)
-   - .service-card[data-images]: rota SOLO la tarjeta activa del carrusel
+   IMÁGENES ROTATIVAS
+   - .service-card[data-images]: rota SOLO cuando la card es la activa del carrusel
+   - (proj-card no existe en la versión actual, pero el código lo soportaría igual)
 =========================== */
 (function () {
-    /* ── Inicializar cada card con doble buffer de imágenes ── */
-    function initCard(card, cardIdx, autoStart) {
-        const imgs    = card.dataset.images.split("|").map(s => s.trim());
-        const imgWrap = card.querySelector(".proj-card-img, .service-card-img-photo");
-        const dots    = card.querySelectorAll(".dot");
-        if (!imgWrap) return null;
 
-        const imgA = imgWrap.querySelector("img");
-        if (!imgA) return null;
-        imgA.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 1.1s ease;";
+    // Inicializar doble buffer en una card
+    function initImgRotation(card) {
+        const imgs    = (card.dataset.images || "").split("|").map(s => s.trim()).filter(Boolean);
+        if (imgs.length < 2) return; // nada que rotar
+
+        const wrap = card.querySelector(".service-card-img-photo, .proj-card-img");
+        if (!wrap) return;
+
+        const imgA = wrap.querySelector("img");
+        if (!imgA) return;
+
+        // Estilos de posición absoluta sobre las dos capas
+        imgA.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 1.1s ease;z-index:0;";
 
         const imgB = document.createElement("img");
-        imgB.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.1s ease;";
-        imgB.alt = imgA.alt;
-        imgWrap.insertBefore(imgB, dots.length ? imgWrap.querySelector(".proj-dots") : null);
+        imgB.src   = imgs[1]; // precarga la segunda
+        imgB.alt   = imgA.alt;
+        imgB.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.1s ease;z-index:0;";
+        // Insertar antes del overlay ::after (que es CSS, no un nodo real) y antes de .proj-dots
+        const dots = wrap.querySelector(".proj-dots");
+        wrap.insertBefore(imgB, dots || null);
+
+        // Precargar todas
+        imgs.forEach(src => { const i = new Image(); i.src = src; });
 
         let current = 0, flipped = false, timer = null;
 
         function goTo(idx) {
+            const src = imgs[idx];
             if (flipped) {
-                imgB.src = imgs[idx]; imgB.style.opacity = "1"; imgA.style.opacity = "0";
+                imgB.src = src; imgB.style.opacity = "1"; imgA.style.opacity = "0";
             } else {
-                imgA.src = imgs[idx]; imgA.style.opacity = "1"; imgB.style.opacity = "0";
+                imgA.src = src; imgA.style.opacity = "1"; imgB.style.opacity = "0";
             }
             flipped = !flipped;
-            dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+
+            // Actualizar dots si los hay
+            const dotEls = wrap.querySelectorAll(".dot");
+            dotEls.forEach((d, i) => d.classList.toggle("active", i === idx));
+
             current = idx;
         }
 
-        function startAuto() {
+        function start() {
             if (timer) return;
-            timer = setInterval(() => goTo((current + 1) % imgs.length), 2800);
+            timer = setInterval(() => goTo((current + 1) % imgs.length), 2500);
         }
-        function stopAuto() { clearInterval(timer); timer = null; }
+        function stop() {
+            clearInterval(timer);
+            timer = null;
+        }
 
-        imgs.forEach(src => { const i = new Image(); i.src = src; });
+        // API para que el carrusel la active/desactive
+        card._imgSetActive = (active) => {
+            if (active) start();
+            else stop();
+        };
 
-        if (autoStart) setTimeout(startAuto, cardIdx * 700);
-
-        card.addEventListener("mouseenter", stopAuto);
-        card.addEventListener("mouseleave", () => { if (autoStart || card._imgActive) startAuto(); });
-
-        // Exponer control para el carrusel
-        card._imgStart = startAuto;
-        card._imgStop  = stopAuto;
-        card._imgActive = false;
-
-        return { startAuto, stopAuto };
-    }
-
-    /* ── Galería estática (.proj-card): siempre activa ── */
-    document.querySelectorAll(".proj-card[data-images]").forEach((card, i) => {
-        initCard(card, i, true);
-    });
-
-    /* ── Carrusel de servicios (.service-card): solo la tarjeta activa ── */
-    const serviceCards = document.querySelectorAll(".service-card[data-images]");
-    serviceCards.forEach((card, i) => initCard(card, i, false));
-
-    // Conectar con el carrusel: observar qué card tiene escala 1.08 (la activa)
-    // El carrusel expone cuál es la "cur" usando transform:scale(1.08) y opacity:1
-    // Usamos MutationObserver sobre el track para detectar cambios de estilo
-    const track = document.getElementById("servicesTrack");
-    if (!track || !serviceCards.length) return;
-
-    let lastActive = null;
-
-    function syncActiveCard() {
-        // La card activa es la que tiene opacity "1" y scale 1.08
-        const allServiceCards = track.querySelectorAll(".service-card");
-        allServiceCards.forEach(card => {
-            const isActive = card.style.opacity === "1" && card.style.transform.includes("1.08");
-            // Buscar la card original (pueden ser clones)
-            const originalIdx = Array.from(serviceCards).findIndex(
-                c => c.dataset.images === card.dataset.images
-            );
-            if (originalIdx < 0) return;
-            const orig = serviceCards[originalIdx];
-
-            if (isActive && lastActive !== card) {
-                // Pausar la anterior
-                if (lastActive && lastActive._imgStop) {
-                    lastActive._imgStop();
-                    lastActive._imgActive = false;
-                }
-                // Activar la nueva (usando la referencia del clon)
-                if (!card._imgStart) {
-                    // El clon no tiene _imgStart: inicializar
-                    initCard(card, originalIdx, false);
-                }
-                card._imgActive = true;
-                card._imgStart();
-                lastActive = card;
-            } else if (!isActive && card._imgActive) {
-                card._imgStop && card._imgStop();
-                card._imgActive = false;
-            }
+        // Hover: pausar mientras el usuario mira
+        card.addEventListener("mouseenter", stop);
+        card.addEventListener("mouseleave", () => {
+            if (card._imgActive) start();
         });
     }
 
-    // Observar cambios de style en las cards del track (el carrusel modifica transform/opacity)
-    const observer = new MutationObserver(syncActiveCard);
-    observer.observe(track, { attributes: true, subtree: true, attributeFilter: ["style"] });
+    // Inicializar todas las service-cards
+    document.querySelectorAll(".service-card[data-images]").forEach(card => {
+        initImgRotation(card);
+        card._imgActive = false;
+    });
 
-    // Sincronizar también en los eventos del carrusel
-    setTimeout(syncActiveCard, 500);
+    // También inicializar proj-cards si existen (autostart)
+    document.querySelectorAll(".proj-card[data-images]").forEach((card, i) => {
+        initImgRotation(card);
+        card._imgActive = true;
+        setTimeout(() => { if (card._imgSetActive) card._imgSetActive(true); }, i * 700);
+    });
+
 })();
 
-
 /* ===========================
-   SCROLL SUAVE para links internos
+   SCROLL SUAVE
 =========================== */
 document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener("click", function (e) {
@@ -323,7 +287,6 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     });
 });
 
-
 /* ===========================
    FORMULARIO — fetch async + Formspree
 =========================== */
@@ -334,10 +297,9 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
-
-        const btn     = form.querySelector(".form-submit");
-        const nombre  = form.querySelector("#nombre").value.trim();
-        const mail    = form.querySelector("#mail").value.trim();
+        const btn    = form.querySelector(".form-submit");
+        const nombre = form.querySelector("#nombre").value.trim();
+        const mail   = form.querySelector("#mail").value.trim();
 
         if (!nombre || !mail) {
             showMsg("Por favor completá nombre y e-mail.", "error");
@@ -353,7 +315,6 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
                 body:    new FormData(form),
                 headers: { "Accept": "application/json" }
             });
-
             if (res.ok) {
                 form.reset();
                 showMsg("¡Gracias! Tu consulta fue enviada. Te contactamos a la brevedad.", "ok");
@@ -377,9 +338,8 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     }
 })();
 
-
 /* ===========================
-   WHATSAPP — tracking de clicks
+   WHATSAPP — tracking
 =========================== */
 document.querySelectorAll(".whatsapp-btn, .whatsapp-text").forEach(link => {
     link.addEventListener("click", () => {
@@ -388,11 +348,8 @@ document.querySelectorAll(".whatsapp-btn, .whatsapp-text").forEach(link => {
     });
 });
 
-
 /* ===========================
-   BLUEPRINT — canvas arquitectónico
-   Solo en desktop (≤768px se omite para
-   no consumir CPU/batería en mobile)
+   BLUEPRINT — solo desktop
 =========================== */
 (function () {
     if (window.matchMedia("(max-width:768px)").matches) return;
@@ -402,16 +359,14 @@ document.querySelectorAll(".whatsapp-btn, .whatsapp-text").forEach(link => {
     const LOOP_PAUSE = 2800;
 
     const PALETTES = {
-        light: { line:"43,43,41",   alpha:0.045 },
+        light: { line:"43,43,41",    alpha:0.045 },
         dark:  { line:"255,255,255", alpha:0.08  },
     };
 
     const SECTIONS = [
         { id:"bpProyectos", dark:false },
         { id:"bpAbout",     dark:false },
-        { id:"bpAudiencia", dark:false },
         { id:"bpProceso",   dark:false },
-        { id:"bpGarantia",  dark:false },
         { id:"bpCta",       dark:true  },
     ];
 
@@ -423,11 +378,9 @@ document.querySelectorAll(".whatsapp-btn, .whatsapp-text").forEach(link => {
         const ctx     = canvas.getContext("2d");
         const PAL     = dark ? PALETTES.dark : PALETTES.light;
         const C = PAL.line, A = PAL.alpha;
-
         let W, H;
 
         function snap(v) { return Math.round(v / GRID) * GRID; }
-
         function resize() {
             W = canvas.width  = section.offsetWidth;
             H = canvas.height = section.offsetHeight;
@@ -435,8 +388,7 @@ document.querySelectorAll(".whatsapp-btn, .whatsapp-text").forEach(link => {
 
         function makeBlueprint() {
             const items = [];
-            const mx1 = W*.05, mx2 = W*.36;
-            const mx3 = W*.64, mx4 = W*.95;
+            const mx1 = W*.05, mx2 = W*.36, mx3 = W*.64, mx4 = W*.95;
             const my1 = H*.04, my2 = H*.96;
             const rr  = (a,b) => a + Math.random()*(b-a);
 
@@ -451,41 +403,30 @@ document.querySelectorAll(".whatsapp-btn, .whatsapp-text").forEach(link => {
                     if (w>0 && h>0) items.push({ type:"rect", x, y, w, h });
                 }
             });
-
             [snap(my1+GRID*.5), snap(my2-GRID*.5)].forEach(dy => {
                 items.push({ type:"dim", x1:snap(mx1), y1:dy, x2:snap(mx2), y2:dy, label:rr(2,6).toFixed(1)+"m" });
                 items.push({ type:"dim", x1:snap(mx3), y1:dy, x2:snap(mx4), y2:dy, label:rr(2,6).toFixed(1)+"m" });
             });
-
             [[mx1,my1],[mx2,my1],[mx1,my2],[mx2,my2],
              [mx3,my1],[mx4,my1],[mx3,my2],[mx4,my2]].forEach(([ax,ay]) => {
                 items.push({ type:"angle", x:snap(ax), y:snap(ay) });
             });
-
             items.push({ type:"grid_margin", mx1, mx2, mx3, mx4, my1, my2 });
             return items;
         }
 
         let items=[], progresses=[], t=0, loopTimer=null;
-
-        function reset() {
-            items      = makeBlueprint();
-            progresses = items.map(()=>0);
-            t          = 0;
-        }
+        function reset() { items=makeBlueprint(); progresses=items.map(()=>0); t=0; }
 
         function seg(x1,y1,x2,y2,p) {
-            ctx.beginPath();
-            ctx.moveTo(x1,y1);
-            ctx.lineTo(x1+(x2-x1)*p, y1+(y2-y1)*p);
-            ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(x1,y1);
+            ctx.lineTo(x1+(x2-x1)*p, y1+(y2-y1)*p); ctx.stroke();
         }
 
         function drawItem(item, p) {
             const alpha = Math.min(A, A*p*2);
             ctx.strokeStyle = `rgba(${C},${alpha})`;
             ctx.fillStyle   = `rgba(${C},${alpha})`;
-
             switch (item.type) {
                 case "grid_margin": {
                     ctx.lineWidth = .3;
@@ -505,42 +446,36 @@ document.querySelectorAll(".whatsapp-btn, .whatsapp-text").forEach(link => {
                     sides.forEach(([ax,ay,bx,by]) => {
                         if (rem<=0) return;
                         const len = Math.hypot(bx-ax,by-ay);
-                        seg(ax,ay,bx,by,Math.min(1,rem/len));
-                        rem -= len;
+                        seg(ax,ay,bx,by,Math.min(1,rem/len)); rem-=len;
                     });
                     break;
                 }
                 case "dim": {
                     if (p<.05) break;
-                    ctx.lineWidth = .5;
-                    ctx.setLineDash([4,5]);
+                    ctx.lineWidth=.5; ctx.setLineDash([4,5]);
                     seg(item.x1,item.y1,item.x2,item.y2,Math.min(1,p*1.4));
                     ctx.setLineDash([]);
-                    [[item.x1,item.y1],[item.x2,item.y2]].forEach(([tx,ty]) => {
+                    [[item.x1,item.y1],[item.x2,item.y2]].forEach(([tx,ty])=>{
                         ctx.beginPath(); ctx.moveTo(tx,ty-5); ctx.lineTo(tx,ty+5); ctx.stroke();
                     });
                     if (p>.65) {
-                        ctx.globalAlpha = A*(p-.65)/.35;
-                        ctx.font = `${Math.max(9,W*.007)}px IBM Plex Sans,sans-serif`;
-                        ctx.textAlign = "center";
-                        ctx.fillText(item.label, (item.x1+item.x2)/2, item.y1-7);
-                        ctx.globalAlpha = 1;
+                        ctx.globalAlpha=A*(p-.65)/.35;
+                        ctx.font=`${Math.max(9,W*.007)}px IBM Plex Sans,sans-serif`;
+                        ctx.textAlign="center";
+                        ctx.fillText(item.label,(item.x1+item.x2)/2,item.y1-7);
+                        ctx.globalAlpha=1;
                     }
                     break;
                 }
                 case "angle": {
                     if (p<.2) break;
-                    const sz = Math.min(W,H)*.022;
-                    const fa = (p-.2)/.8;
-                    ctx.lineWidth = .6;
-                    ctx.strokeStyle = `rgba(${C},${A*fa})`;
+                    const sz=Math.min(W,H)*.022, fa=(p-.2)/.8;
+                    ctx.lineWidth=.6; ctx.strokeStyle=`rgba(${C},${A*fa})`;
                     ctx.beginPath();
                     ctx.moveTo(item.x+sz,item.y); ctx.lineTo(item.x,item.y); ctx.lineTo(item.x,item.y+sz);
                     ctx.stroke();
-                    ctx.beginPath();
-                    ctx.arc(item.x,item.y,1.5,0,Math.PI*2);
-                    ctx.fillStyle = `rgba(${C},${A*fa*1.5})`;
-                    ctx.fill();
+                    ctx.beginPath(); ctx.arc(item.x,item.y,1.5,0,Math.PI*2);
+                    ctx.fillStyle=`rgba(${C},${A*fa*1.5})`; ctx.fill();
                     break;
                 }
             }
@@ -548,20 +483,18 @@ document.querySelectorAll(".whatsapp-btn, .whatsapp-text").forEach(link => {
 
         function frame() {
             ctx.clearRect(0,0,W,H);
-            let allDone = true;
-            items.forEach((item,i) => {
-                if (t > i*18) progresses[i] = Math.min(1, progresses[i]+SPEED);
-                if (progresses[i]<1) allDone = false;
-                drawItem(item, progresses[i]);
+            let allDone=true;
+            items.forEach((item,i)=>{
+                if(t>i*18) progresses[i]=Math.min(1,progresses[i]+SPEED);
+                if(progresses[i]<1) allDone=false;
+                drawItem(item,progresses[i]);
             });
             t++;
-            if (allDone && !loopTimer) {
-                loopTimer = setTimeout(()=>{ reset(); loopTimer=null; }, LOOP_PAUSE);
-            }
+            if(allDone&&!loopTimer) loopTimer=setTimeout(()=>{reset();loopTimer=null;},LOOP_PAUSE);
             requestAnimationFrame(frame);
         }
 
         resize(); reset(); frame();
-        new ResizeObserver(()=>{ resize(); reset(); }).observe(section);
+        new ResizeObserver(()=>{resize();reset();}).observe(section);
     });
 })();
